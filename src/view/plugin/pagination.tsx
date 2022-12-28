@@ -131,6 +131,7 @@ export function Pagination() {
             <button
               tabIndex={0}
               role="button"
+              type="button"
               onClick={() => setPage(0)}
               title={_('pagination.firstPage')}
               aria-label={_('pagination.firstPage')}
@@ -156,6 +157,7 @@ export function Pagination() {
             <button
               tabIndex={0}
               role="button"
+              type="button"
               onClick={() => setPage(i)}
               className={classJoin(
                 currentPage === i
@@ -187,6 +189,7 @@ export function Pagination() {
             <button
               tabIndex={0}
               role="button"
+              type="button"
               onClick={() => setPage(pages() - 1)}
               title={_('pagination.page', pages())}
               aria-label={_('pagination.page', pages())}
@@ -238,6 +241,7 @@ export function Pagination() {
           <button
             tabIndex={0}
             role="button"
+            type="button"
             disabled={currentPage === 0}
             onClick={() => setPage(currentPage - 1)}
             title={_('pagination.previous')}
@@ -257,6 +261,7 @@ export function Pagination() {
           <button
             tabIndex={0}
             role="button"
+            type="button"
             disabled={pages() === currentPage + 1 || pages() === 0}
             onClick={() => setPage(currentPage + 1)}
             title={_('pagination.next')}
