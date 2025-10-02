@@ -37,16 +37,18 @@ export function TBody() {
         />
       )}
 
-      {(status === Status.Rendered || status === Status.Loaded) && data && data.length === 0 && (
-        <MessageRow
-          message={_('noRecordsFound')}
-          colSpan={headerLength()}
-          className={classJoin(
-            className('notfound'),
-            config.className.notfound,
-          )}
-        />
-      )}
+      {(status === Status.Rendered || status === Status.Loaded) &&
+        data &&
+        data.length === 0 && (
+          <MessageRow
+            message={_('noRecordsFound')}
+            colSpan={headerLength()}
+            className={classJoin(
+              className('notfound'),
+              config.className.notfound,
+            )}
+          />
+        )}
 
       {status === Status.Error && (
         <MessageRow

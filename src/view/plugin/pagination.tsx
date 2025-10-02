@@ -18,6 +18,7 @@ export interface PaginationConfig {
     url?: (prevUrl: string, page: number, limit: number) => string;
     body?: (prevBody: BodyInit, page: number, limit: number) => BodyInit;
   };
+  perPageSelect?: (number | [string, number])[] | false;
 }
 
 export function Pagination() {
@@ -30,12 +31,14 @@ export function Pagination() {
     buttonsCount = 3,
     limit = 10,
     page = 0,
+    perPageSelect = [5, 10, 25, 50, ['All', -1]],
     resetPageOnUpdate = true,
   } = config.pagination as PaginationConfig;
 
   const processor = useRef<PaginationLimit | ServerPaginationLimit>(null);
   const [currentPage, setCurrentPage] = useState(page);
   const [total, setTotal] = useState(0);
+  const [perPageOption, setPerPageOption] = useState(limit);
   const _ = useTranslator();
 
   useEffect(() => {
@@ -97,7 +100,7 @@ export function Pagination() {
     }
   };
 
-  const pages = () => Math.ceil(total / limit);
+  const pages = () => Math.max(Math.ceil(total / perPageOption), 1);
 
   const setPage = (page: number) => {
     if (page >= pages() || page < 0 || page === currentPage) {
@@ -110,6 +113,19 @@ export function Pagination() {
       page: page,
     });
   };
+
+  const setPerPage = (perPage: number) => {
+    if (perPage === perPageOption) {
+      return null;
+    }
+
+    setPerPageOption(perPage);
+    setPage(0);
+
+    processor.current.setProps({
+      limit: perPage,
+    });
+  }
 
   const renderPages = () => {
     if (buttonsCount <= 0) {
@@ -216,11 +232,26 @@ export function Pagination() {
             )}
             title={_('pagination.navigate', currentPage + 1, pages())}
           >
-            {_('pagination.showing')} <b>{_(`${currentPage * limit + 1}`)}</b>{' '}
-            {_('pagination.to')}{' '}
-            <b>{_(`${Math.min((currentPage + 1) * limit, total)}`)}</b>{' '}
-            {_('pagination.of')} <b>{_(`${total}`)}</b>{' '}
-            {_('pagination.results')}
+            <p>
+              {_('pagination.showing')} <b>{_(`${perPageOption === -1 ? 1 : currentPage * perPageOption + 1}`)}</b>{' '}
+              {_('pagination.to')}{' '}
+              <b>{_(`${perPageOption === -1 ? total : Math.min((currentPage + 1) * perPageOption, total)}`)}</b>{' '}
+              {_('pagination.of')} <b>{_(`${total}`)}</b>{' '}
+              {_('pagination.results')}
+            </p>
+            {perPageSelect && (
+              <p>
+                {_('pagination.showing')}{' '}
+                <select className={config.className.paginationPerPageSelect} value={perPageOption} onChange={e => setPerPage(parseInt((e.target as HTMLInputElement).value))}>
+                  {perPageSelect.map((perPage: number | [string, number], index) => (
+                    Array.isArray(perPage)
+                      ? <option key={index} value={perPage[1]}>{perPage[0]}</option>
+                      : <option key={index} value={perPage}>{perPage}</option>
+                  ))}
+                </select>{' '}
+                {_('pagination.results')}
+              </p>
+            )}
           </div>
         )}
       </Fragment>

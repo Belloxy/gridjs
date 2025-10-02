@@ -22,6 +22,10 @@ class PaginationLimit extends PipelineProcessor<Tabular, PaginationLimitProps> {
   }
 
   protected _process(data: Tabular): Tabular {
+    if (this.props.limit === -1) {
+      return new Tabular(data.rows);
+    }
+
     const page = this.props.page;
     const start = page * this.props.limit;
     const end = (page + 1) * this.props.limit;
