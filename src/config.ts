@@ -77,7 +77,7 @@ export interface Config {
     search: string;
     sort: string;
     pagination: string;
-    paginationPerPageSelect: string
+    paginationPerPageSelect: string;
     paginationSummary: string;
     paginationButton: string;
     paginationButtonNext: string;

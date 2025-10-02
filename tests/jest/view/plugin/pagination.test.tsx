@@ -112,7 +112,7 @@ describe('Pagination plugin', () => {
 
     expect(pagination.find('.my-page-summary')).toHaveLength(1);
     expect(pagination.find('.my-page-summary').text()).toBe(
-      'Showing 1 to 1 of 3 results',
+      'Showing 1 to 1 of 3 resultsShowing 5102550All results',
     );
   });
 });

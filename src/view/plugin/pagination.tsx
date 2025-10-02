@@ -125,7 +125,7 @@ export function Pagination() {
     processor.current.setProps({
       limit: perPage,
     });
-  }
+  };
 
   const renderPages = () => {
     if (buttonsCount <= 0) {
@@ -233,21 +233,51 @@ export function Pagination() {
             title={_('pagination.navigate', currentPage + 1, pages())}
           >
             <p>
-              {_('pagination.showing')} <b>{_(`${perPageOption === -1 ? 1 : currentPage * perPageOption + 1}`)}</b>{' '}
+              {_('pagination.showing')}{' '}
+              <b>
+                {_(
+                  `${
+                    perPageOption === -1 ? 1 : currentPage * perPageOption + 1
+                  }`,
+                )}
+              </b>{' '}
               {_('pagination.to')}{' '}
-              <b>{_(`${perPageOption === -1 ? total : Math.min((currentPage + 1) * perPageOption, total)}`)}</b>{' '}
+              <b>
+                {_(
+                  `${
+                    perPageOption === -1
+                      ? total
+                      : Math.min((currentPage + 1) * perPageOption, total)
+                  }`,
+                )}
+              </b>{' '}
               {_('pagination.of')} <b>{_(`${total}`)}</b>{' '}
               {_('pagination.results')}
             </p>
             {perPageSelect && (
-              <p>
+              <p id="grid-js-per-page-select">
                 {_('pagination.showing')}{' '}
-                <select className={config.className.paginationPerPageSelect} value={perPageOption} onChange={e => setPerPage(parseInt((e.target as HTMLInputElement).value))}>
-                  {perPageSelect.map((perPage: number | [string, number], index) => (
-                    Array.isArray(perPage)
-                      ? <option key={index} value={perPage[1]}>{perPage[0]}</option>
-                      : <option key={index} value={perPage}>{perPage}</option>
-                  ))}
+                <select
+                  name="gridjs"
+                  className={config.className.paginationPerPageSelect}
+                  value={perPageOption}
+                  onChange={(e) =>
+                    setPerPage(parseInt((e.target as HTMLInputElement).value))
+                  }
+                  aria-labelledby="grid-js-per-page-select"
+                >
+                  {perPageSelect.map(
+                    (perPage: number | [string, number], index) =>
+                      Array.isArray(perPage) ? (
+                        <option key={index} value={perPage[1]}>
+                          {perPage[0]}
+                        </option>
+                      ) : (
+                        <option key={index} value={perPage}>
+                          {perPage}
+                        </option>
+                      ),
+                  )}
                 </select>{' '}
                 {_('pagination.results')}
               </p>

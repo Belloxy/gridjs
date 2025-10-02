@@ -51,10 +51,10 @@ export function Container() {
 
   useEffect(() => {
     if (config.header && status === Status.Loaded && data?.length) {
+      config.eventEmitter?.emit('ready');
+
       // now that we have the data, let's adjust columns width
       // NOTE: that we only calculate the columns width once
-      config.eventEmitter.emit('ready');
-
       dispatch(
         actions.SetHeader(config.header.adjustWidth(config, tableRef, tempRef)),
       );
