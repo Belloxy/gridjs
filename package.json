@@ -1,6 +1,6 @@
 {
-  "name": "gridjs",
-  "version": "6.2.0",
+  "name": "custom-gridjs",
+  "version": "6.2.1",
   "description": "Advanced table plugin",
   "author": "Afshin Mehrabani <afshin.meh@gmail.com>",
   "license": "MIT",
@@ -18,7 +18,7 @@
     "jquery"
   ],
   "homepage": "https://gridjs.io",
-  "repository": "https://github.com/grid-js/gridjs",
+  "repository": "https://github.com/belloxy/gridjs",
   "types": "dist/index.d.ts",
   "files": [
     "dist/*",
