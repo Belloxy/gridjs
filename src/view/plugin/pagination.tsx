@@ -235,9 +235,7 @@ export function Pagination() {
             {_('pagination.showing')}{' '}
             <b>
               {_(
-                `${
-                  perPageOption === -1 ? 1 : currentPage * perPageOption + 1
-                }`,
+                `${perPageOption === -1 ? 1 : currentPage * perPageOption + 1}`,
               )}
             </b>{' '}
             {_('pagination.to')}{' '}

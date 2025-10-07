@@ -19,6 +19,8 @@ export type TDataObjectRow = { [key: string]: TCell };
 export type TDataObject = OneDArray<TDataObjectRow>;
 // (Array of Arrays) and (Array of Objects)
 export type TData = TDataArray | TDataObject;
+// HTML attributes to be added to rows/cells
+export type TAttribute = { [key: string]: string };
 
 // Table header cell type
 export interface TColumn {

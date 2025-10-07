@@ -2,7 +2,7 @@ import { h, ComponentChild, JSX } from 'preact';
 
 import Cell from '../../cell';
 import { classJoin, className } from '../../util/className';
-import { CSSDeclaration, TColumn } from '../../types';
+import { CSSDeclaration, TAttribute, TColumn } from '../../types';
 import Row from '../../row';
 import { JSXInternal } from 'preact/src/jsx';
 import { PluginRenderer } from '../../plugin';
@@ -66,6 +66,14 @@ export function TD(
     }
   };
 
+  const customAttributes: TAttribute = (
+    config.rowAttribute instanceof Function
+      ? config.rowAttribute(props.row)
+      : config.rowAttribute
+  ) as TAttribute;
+
+  const { class: customClass, ...attributes } = customAttributes;
+
   return (
     <td
       role={props.role}
@@ -75,6 +83,7 @@ export function TD(
         className('td'),
         props.className,
         config.className.td,
+        customClass,
       )}
       style={{
         ...props.style,
@@ -82,6 +91,7 @@ export function TD(
       }}
       onClick={handleClick}
       {...getCustomAttributes(props.column)}
+      {...attributes}
     >
       {content()}
     </td>

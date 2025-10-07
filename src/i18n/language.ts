@@ -26,7 +26,7 @@ export class Translator {
     const splitted = message.split('.');
     const key = splitted[0];
 
-    if (lang[key]) {
+    if (key in lang) {
       const val = lang[key];
 
       if (typeof val === 'string') {

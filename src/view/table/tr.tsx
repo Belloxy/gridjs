@@ -3,13 +3,14 @@ import { h, JSX, ComponentChildren } from 'preact';
 import Row from '../../row';
 import Cell from '../../cell';
 import { classJoin, className } from '../../util/className';
-import { TColumn } from '../../types';
+import { TAttribute, TColumn } from '../../types';
 import { TD } from './td';
 import Header from '../../header';
 import { useConfig } from '../../hooks/useConfig';
 import useSelector from '../../hooks/useSelector';
 
 export function TR(props: {
+  index?: number;
   row?: Row;
   messageRow?: boolean;
   children?: ComponentChildren;
@@ -50,10 +51,19 @@ export function TR(props: {
     });
   };
 
+  const customAttributes: TAttribute = (
+    config.rowAttribute instanceof Function
+      ? config.rowAttribute(props.row)
+      : config.rowAttribute
+  ) as TAttribute;
+
+  const { class: customClass, ...attributes } = customAttributes;
+
   return (
     <tr
-      className={classJoin(className('tr'), config.className.tr)}
+      className={classJoin(className('tr'), config.className.tr, customClass)}
       onClick={handleClick}
+      {...attributes}
     >
       {getChildren()}
     </tr>

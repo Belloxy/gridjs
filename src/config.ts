@@ -1,4 +1,12 @@
-import { CSSDeclaration, OneDArray, Status, TColumn, TData } from './types';
+import {
+  CSSDeclaration,
+  OneDArray,
+  Status,
+  TAttribute,
+  TCell,
+  TColumn,
+  TData,
+} from './types';
 import Storage from './storage/storage';
 import Pipeline from './pipeline/pipeline';
 import Tabular from './tabular';
@@ -16,6 +24,7 @@ import { GridEvents } from './events';
 import { PluginManager, PluginPosition, Plugin } from './plugin';
 import Grid from './grid';
 import { Store } from './state/store';
+import Row from './row';
 
 export const ConfigContext = createContext(null);
 
@@ -64,6 +73,10 @@ export interface Config {
     header: CSSDeclaration;
     footer: CSSDeclaration;
   }>;
+  rowAttribute?: TAttribute | ((row: Row) => TAttribute);
+  cellAttribute?:
+    | TAttribute
+    | ((cell: TCell, row: Row, column: TColumn) => TAttribute);
   className?: Partial<{
     table: string;
     th: string;
@@ -134,6 +147,8 @@ export class Config {
       processingThrottleMs: 100,
       autoWidth: true,
       style: {},
+      rowAttribute: {},
+      cellAttribute: {},
       className: {},
     };
   }
