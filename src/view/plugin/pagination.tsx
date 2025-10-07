@@ -232,34 +232,35 @@ export function Pagination() {
             )}
             title={_('pagination.navigate', currentPage + 1, pages())}
           >
-            <p>
-              {_('pagination.showing')}{' '}
-              <b>
-                {_(
-                  `${
-                    perPageOption === -1 ? 1 : currentPage * perPageOption + 1
-                  }`,
-                )}
-              </b>{' '}
-              {_('pagination.to')}{' '}
-              <b>
-                {_(
-                  `${
-                    perPageOption === -1
-                      ? total
-                      : Math.min((currentPage + 1) * perPageOption, total)
-                  }`,
-                )}
-              </b>{' '}
-              {_('pagination.of')} <b>{_(`${total}`)}</b>{' '}
-              {_('pagination.results')}
-            </p>
+            {_('pagination.showing')}{' '}
+            <b>
+              {_(
+                `${
+                  perPageOption === -1 ? 1 : currentPage * perPageOption + 1
+                }`,
+              )}
+            </b>{' '}
+            {_('pagination.to')}{' '}
+            <b>
+              {_(
+                `${
+                  perPageOption === -1
+                    ? total
+                    : Math.min((currentPage + 1) * perPageOption, total)
+                }`,
+              )}
+            </b>{' '}
+            {_('pagination.of')} <b>{_(`${total}`)}</b>{' '}
+            {_('pagination.results')}
             {perPageSelect && (
               <p id="grid-js-per-page-select">
                 {_('pagination.showing')}{' '}
                 <select
                   name="gridjs"
-                  className={config.className.paginationPerPageSelect}
+                  className={classJoin(
+                    className('per-page-select'),
+                    config.className.paginationPerPageSelect,
+                  )}
                   value={perPageOption}
                   onChange={(e) =>
                     setPerPage(parseInt((e.target as HTMLInputElement).value))
