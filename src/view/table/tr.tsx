@@ -63,6 +63,7 @@ export function TR(props: {
     <tr
       className={classJoin(className('tr'), config.className.tr, customClass)}
       onClick={handleClick}
+      data-index={props.index}
       {...attributes}
     >
       {getChildren()}

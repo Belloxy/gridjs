@@ -13,6 +13,7 @@ export function TBody() {
   const data = useSelector((state) => state.data);
   const status = useSelector((state) => state.status);
   const header = useSelector((state) => state.header);
+  const pagination = useSelector((state) => state.pagination);
   const _ = useTranslator();
 
   const headerLength = () => {
@@ -22,11 +23,27 @@ export function TBody() {
     return 0;
   };
 
+  const getPaginationOffset = () => {
+    if (!pagination || !config.pagination) {
+      return 0;
+    }
+
+    const { page = 0, limit = 10 } = pagination;
+
+    if (limit === -1) {
+      return 0;
+    }
+
+    return page * limit;
+  };
+
+  const paginationOffset = getPaginationOffset();
+
   return (
     <tbody className={classJoin(className('tbody'), config.className.tbody)}>
       {data &&
-        data.rows.map((row: Row) => {
-          return <TR key={row.id} row={row} />;
+        data.rows.map((row: Row, index: number) => {
+          return <TR index={paginationOffset + index} row={row} />;
         })}
 
       {status === Status.Loading && (!data || data.length === 0) && (

@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 import { h } from 'preact';
 import { Config, ConfigContext } from '../../../../src/config';
-import { Pagination } from '../../../../src/view/plugin/pagination';
+import { Pagination } from '../../../../src/view/plugin/pagination/pagination';
 
 describe('Pagination plugin', () => {
   let config: Config;

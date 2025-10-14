@@ -1,10 +1,11 @@
 import { h, Fragment } from 'preact';
-import PaginationLimit from '../../pipeline/limit/pagination';
-import { classJoin, className } from '../../util/className';
-import ServerPaginationLimit from '../../pipeline/limit/serverPagination';
-import { useConfig } from '../../hooks/useConfig';
+import PaginationLimit from '../../../pipeline/limit/pagination';
+import { classJoin, className } from '../../../util/className';
+import ServerPaginationLimit from '../../../pipeline/limit/serverPagination';
+import { useConfig } from '../../../hooks/useConfig';
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { useTranslator } from '../../i18n/language';
+import { useTranslator } from '../../../i18n/language';
+import * as actions from './actions';
 
 export interface PaginationConfig {
   limit?: number;
@@ -41,7 +42,11 @@ export function Pagination() {
   const [perPageOption, setPerPageOption] = useState(limit);
   const _ = useTranslator();
 
+  const dispatch = (action) => config.store.dispatch(action);
+
   useEffect(() => {
+    dispatch(actions.SetPaginationInfo(currentPage, perPageOption));
+
     if (server) {
       processor.current = new ServerPaginationLimit({
         limit: limit,
@@ -97,6 +102,8 @@ export function Pagination() {
           page: 0,
         });
       }
+
+      dispatch(actions.SetPaginationInfo(0, perPageOption));
     }
   };
 
@@ -112,6 +119,8 @@ export function Pagination() {
     processor.current.setProps({
       page: page,
     });
+
+    dispatch(actions.SetPaginationInfo(page, perPageOption));
   };
 
   const setPerPage = (perPage: number) => {
@@ -125,6 +134,8 @@ export function Pagination() {
     processor.current.setProps({
       limit: perPage,
     });
+
+    dispatch(actions.SetPaginationInfo(0, perPage));
   };
 
   const renderPages = () => {
