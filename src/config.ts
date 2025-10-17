@@ -77,9 +77,7 @@ export interface Config {
     footer: CSSDeclaration;
   }>;
   rowAttribute?: TAttribute | ((row: Row) => TAttribute);
-  cellAttribute?:
-    | TAttribute
-    | ((cell: TCell, row: Row, column: TColumn) => TAttribute);
+  cellAttribute?: TAttribute | ((cell: TCell, row: Row, column: TColumn) => TAttribute);
   className?: Partial<{
     table: string;
     th: string;
@@ -168,6 +166,9 @@ export class Config {
       });
     }
 
+    // clear existing plugins list to prevent duplicate errors
+    config.plugin = new PluginManager();
+
     // Header
     config.assign({
       header: Header.createFromConfig(config),
@@ -186,8 +187,6 @@ export class Config {
       translator: new Translator(config.language),
     });
 
-    // clear existing plugins list to prevent duplicate errors
-    config.plugin = new PluginManager();
 
     if (config.search) {
       // Search

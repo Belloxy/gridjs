@@ -1,8 +1,8 @@
 import { h } from 'preact';
 import * as actions from './actions';
-import { useStore, className, useEffect, useState, useSelector } from 'gridjs';
-import { Row } from 'gridjs';
-import { Cell } from 'gridjs';
+import { useStore, className, useEffect, useState, useSelector } from 'custom-gridjs';
+import { Row } from 'custom-gridjs';
+import { Cell } from 'custom-gridjs';
 
 interface RowSelectionProps {
   // it's optional because thead doesn't have a row

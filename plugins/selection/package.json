@@ -16,6 +16,6 @@
     "dist/*"
   ],
   "dependencies": {
-    "gridjs": "../../"
+    "custom-gridjs": "../../"
   }
 }

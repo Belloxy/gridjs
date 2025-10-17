@@ -67,9 +67,9 @@ export function TD(
   };
 
   const customAttributes: TAttribute = (
-    config.rowAttribute instanceof Function
-      ? config.rowAttribute(props.row)
-      : config.rowAttribute
+    config.cellAttribute instanceof Function
+      ? config.cellAttribute(props.cell, props.row, props.column)
+      : config.cellAttribute
   ) as TAttribute;
 
   const { class: customClass, ...attributes } = customAttributes;
